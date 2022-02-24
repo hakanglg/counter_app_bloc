@@ -19,20 +19,24 @@ class HomeView extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           floatingActionButton: FABsSection(context),
-          body: Center(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(
-                state.counterValue.toString(),
-                style:
-                    context.textTheme.headline3!.copyWith(color: Colors.black),
-              ),
-            ]),
-          ),
+          body: bodySection(state, context),
         );
       },
     );
   }
+
+  Center bodySection(CounterState state, BuildContext context) {
+    return Center(
+      child: Container(
+        child: customText(state.counterValue.toString(), context),
+      ),
+    );
+  }
+
+  Widget customText(String text, BuildContext context) => Text(
+        text,
+        style: context.textTheme.headline3!.copyWith(color: Colors.black),
+      );
 
   // ignore: non_constant_identifier_names
   Widget FABsSection(BuildContext context) => Row(
