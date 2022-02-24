@@ -3,18 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
 
+import '../../core/components/fab/custom_fab.dart';
+
 part "home_string_values.dart";
 
+// ignore: must_be_immutable
 class HomeView extends StatelessWidget {
   final _HomeStringValues values = _HomeStringValues();
-  int counterValue = 0;
+
+  HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CounterCubit, CounterState>(
       builder: (context, state) {
         return Scaffold(
-          floatingActionButton: FABButtonsSection(),
+          floatingActionButton: FABsSection(context),
           body: Center(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -29,28 +33,20 @@ class HomeView extends StatelessWidget {
       },
     );
   }
-}
 
-class FABButtonsSection extends StatelessWidget {
-  const FABButtonsSection({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        FloatingActionButton(
-          onPressed: () => context.read<CounterCubit>().deccrement(),
-          child: Icon(Icons.remove),
-        ),
-        context.emptySizedWidthBoxLow3x,
-        FloatingActionButton(
-          onPressed: () => context.read<CounterCubit>().increment(),
-          child: Icon(Icons.add),
-        )
-      ],
-    );
-  }
+  // ignore: non_constant_identifier_names
+  Widget FABsSection(BuildContext context) => Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          CustomFAB(
+            icon: Icons.remove,
+            function: () => context.read<CounterCubit>().decrement(),
+          ),
+          context.emptySizedWidthBoxLow3x,
+          CustomFAB(
+            icon: Icons.add,
+            function: () => context.read<CounterCubit>().increment(),
+          ),
+        ],
+      );
 }
